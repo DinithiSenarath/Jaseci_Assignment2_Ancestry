@@ -1,9 +1,9 @@
-// Edges
+
 edge married;
 edge child;
 edge member;
 
-// Nodes
+
 node person {
     has id;
     has family_id;
@@ -42,7 +42,7 @@ node family_root {
     has family_name;
 }
 
-// Graphs
+
 graph family_tree {
     has anchor family_root;
     spawn {
