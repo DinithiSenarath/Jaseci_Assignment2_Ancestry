@@ -32,7 +32,8 @@ walker create_familytree {
                 parents = member["parents"],
                 children = member["children"],
                 spouse = member["spouse"],
-                sport=member["sport"]
+                sport=member["sport"],
+                vehicle = member["vehicle"]
             );
             family_members.list::append(family_member);  
             
@@ -77,6 +78,9 @@ walker find_coming_birthday {
 walker assignment {
     has anchor sport_list = [];
     has anchor sports;
+    
+    has anchor vehicle_list = [];
+    has anchor vehicles;
 
 
     root: take-->node::family_root;
@@ -92,34 +96,23 @@ walker assignment {
                 else:
                     sport_list.list::append(sport);
     }
+    
+    person{
+        
+        vehicles = here.vehicles;
+        if vehicles:
+            for vehicle in vehicles:
+                if vehicle in vehicle_list:
+                    continue;
+                else:
+                    vehicle_list.list::append(vehicle);
+    }
     with exit {
         report sport_list;
+        report vehicle_list;
         }
 
 }
-// walker assignment {
-//     // returns the upcoming birthdays of the family
-//     // has max_return = 5;
-//     has anchor cricket = [];
-//     has anchor football = [];
 
-//     root: take --> node::family_root;
-//     family_root: take --> node::person;
-//     person {
-//         if here.sport = "Cricket":
-//             cricket.l::append([here.sport, here.name]);
-//         else if here.sport = "Football":
-//             football.l::append([here.sport, here.name]);
-//         end
-//     } 
-//     with exit {
-//         // birthday_order = std.sort_by_col(birthday_order, 0);
-//         // birthday_order = birthday_order[0:max_return];
-//         std.out(cricket);
-//         std.out(football);
-//         report cricket;
-//         report football;
-//     }
-// }
 
 
