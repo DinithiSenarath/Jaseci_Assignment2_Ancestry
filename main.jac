@@ -38,13 +38,13 @@ walker create_familytree {
                 children = member["children"],
                 spouse = member["spouse"]
             );
-            famly_members.list::append(family_member);
+            family_members.list::append(family_member);
         }
     }
 
     with exit {
-        for member_1 in famly_members {
-            for member_2 in famly_members {
+        for member_1 in family_members {
+            for member_2 in family_members {
                 if (member_1.id  == member_2.id): continue;
                 if (member_1.spouse == member_2.id and member_2.spouse == member_1.id) {
                     member_1 +[married]+> member_2;
