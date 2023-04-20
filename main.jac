@@ -35,7 +35,8 @@ walker create_familytree {
                 sport=member["sport"],
                 vehicle = member["vehicle"],
                 music = member["music"],
-                social_media = member["social_media"]
+                social_media = member["social_media"],
+                hobby = member["hobby"]
             );
             family_members.list::append(family_member);  
             
@@ -89,6 +90,9 @@ walker assignment {
     
     has anchor social_media_list = [];
     has anchor social;
+    
+    has anchor hobby_list = [];
+    has anchor hobby;
 
 
     root: take-->node::family_root;
@@ -135,13 +139,26 @@ walker assignment {
                 if media in social_media_list:
                     continue;
                 else:
-                    social_media_list.list::append(vehicle);
+                    social_media_list.list::append(media);
                     
-    }             
+    } 
+    
+    person{
+        
+        hobbies = here.hobbies;
+        if hobbies:
+            for hobby in hobbies:
+                if hobby in hobby_list:
+                    continue;
+                else:
+                    hobby_list.list::append(hobby);
+    }
     with exit {
         report sport_list;
         report vehicle_list;
         report music_list;
+        report social_media_list;
+        report hobby_list;
         }
 
 }
