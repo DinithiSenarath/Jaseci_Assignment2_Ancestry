@@ -19,6 +19,7 @@ node person {
     has sport;
     has vehicle;
     has music;
+    has social_media;
 
     has age;
     has days_to_birthday;
