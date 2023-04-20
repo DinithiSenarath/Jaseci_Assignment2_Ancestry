@@ -33,7 +33,8 @@ walker create_familytree {
                 children = member["children"],
                 spouse = member["spouse"],
                 sport=member["sport"],
-                vehicle = member["vehicle"]
+                vehicle = member["vehicle"],
+                music = member["music"]
             );
             family_members.list::append(family_member);  
             
@@ -81,6 +82,9 @@ walker assignment {
     
     has anchor vehicle_list = [];
     has anchor vehicles;
+    
+    has anchor music_list = [];
+    has anchor musics;
 
 
     root: take-->node::family_root;
@@ -107,9 +111,21 @@ walker assignment {
                 else:
                     vehicle_list.list::append(vehicle);
     }
+    
+    person{
+        
+        musics = here.musics;
+        if musics:
+            for music in musics:
+                if music in music_list:
+                    continue;
+                else:
+                    music_list.list::append(music);
+    }
     with exit {
         report sport_list;
         report vehicle_list;
+        report music_list;
         }
 
 }
