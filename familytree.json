@@ -25,7 +25,8 @@
             "spouse": null,
             "gender": "Male",
             "sport":"Cricket",
-            "vehicle" : "Audi"
+            "vehicle" : "Audi",
+            "music" : "Classical"
         },
         {
             "uid": "0x2",
@@ -43,7 +44,8 @@
             "spouse": "0x3",
             "gender": "Male",
             "sport":"Cricket",
-            "vehicle" : "Toyota"
+            "vehicle" : "Toyota",
+            "music" : "Classical"
         },
         {
             "uid": "0x3",
@@ -62,6 +64,7 @@
             "gender": "Female",
             "sport":"Football",
             "vehicle" : "Toyota",
+            "music" : "Classical"
         },
         {
             "uid": "0x4",
@@ -78,7 +81,8 @@
             "spouse": null,
             "gender": "Female",
             "sport":"Football",
-            "vehicle" : "Nissan"
+            "vehicle" : "Nissan",
+            "music" : "Pop"
         },
         {
             "uid": "0x5",
@@ -95,7 +99,8 @@
             "spouse": null,
             "gender": "Male",
             "sport":"Football",
-            "vehicle" : "Mazda"
+            "vehicle" : "Mazda",
+            "music" : "Pop"
         }
     ]
 }
