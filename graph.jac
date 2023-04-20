@@ -20,6 +20,7 @@ node person {
     has vehicle;
     has music;
     has social_media;
+    has hobby;
 
     has age;
     has days_to_birthday;
