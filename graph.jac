@@ -15,6 +15,8 @@ node person {
     has parents;
     has children;
     has spouse;
+    
+    has sport;
 
     has age;
     has days_to_birthday;
@@ -49,3 +51,4 @@ graph family_tree {
         family_root = spawn node::family_root;
     }
 }
+
