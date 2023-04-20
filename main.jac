@@ -3,7 +3,7 @@ import {*} with "./graph.jac";
 walker create_familytree {
     // creates a familytree from a json file
     has data_file = "familytree.json";
-    has famly_members = [];
+    has family_members = [];
 
     root {
         families = file.load_json(data_file)["families"];
@@ -19,13 +19,8 @@ walker create_familytree {
     family_root {
         family_id = here.id;
         members = file.load_json(data_file)["members"];
-        filtered_members = [];
         for member in members {
-            if (member["family_id"] == family_id) {
-                filtered_members.list::append(member);
-            }
-        }
-        for member in filtered_members {
+            if (member["family_id"] != family_id): continue;
             family_member = spawn here +[member]+> node::person(
                 id = member["uid"],
                 family_id = member["family_id"],
@@ -36,16 +31,19 @@ walker create_familytree {
                 deceased = member["deceased"],
                 parents = member["parents"],
                 children = member["children"],
-                spouse = member["spouse"]
+                spouse = member["spouse"],
+                sport=member["sport"]
             );
-            family_members.list::append(family_member);
+            family_members.list::append(family_member);  
+            
         }
+        
     }
 
     with exit {
         for member_1 in family_members {
             for member_2 in family_members {
-                if (member_1.id  == member_2.id): continue;
+                if (member_1.id == member_2.id): continue;
                 if (member_1.spouse == member_2.id and member_2.spouse == member_1.id) {
                     member_1 +[married]+> member_2;
                 }
@@ -76,36 +74,52 @@ walker find_coming_birthday {
         report birthday_order;
     }
 }
+walker assignment {
+    has anchor sport_list = [];
+    has anchor sports;
 
-// walker run {
-//     root {
-//         family_tree = spawn here ++> graph::family_tree;
-//         father = spawn node::person(
-//             id = "6743482333V",
-//             name = "John",
-//             date_of_birth = "1967-01-01",
-//             profession = "Engineer",
-//             gender = "Male"
-//         );
-//         family_tree ++> father;
-//         mother = spawn node::person(
-//             id = "694343433V",
-//             name = "Mary",
-//             date_of_birth = "1969-01-01",
-//             profession = "Architecture",
-//             gender = "Female"
-//         );
-//         family_tree ++> mother;
-//         father <+[married]+> mother;
-//         son = spawn node::person(
-//             id = "9643482333V",
-//             name = "George",
-//             date_of_birth = "1996-01-01",
-//             profession = "Student",
-//             gender = "Male"
-//         );
-//         family_tree ++> son;
-//         father +[child]+> son;
-//         mother +[child]+> son;
+
+    root: take-->node::family_root;
+    family_root: take-->node::person;
+    
+    person{
+        
+        sports = here.sports;
+        if sports:
+            for sport in sports:
+                if sport in sport_list:
+                    continue;
+                else:
+                    sport_list.list::append(sport);
+    }
+    with exit {
+        report sport_list;
+        }
+
+}
+// walker assignment {
+//     // returns the upcoming birthdays of the family
+//     // has max_return = 5;
+//     has anchor cricket = [];
+//     has anchor football = [];
+
+//     root: take --> node::family_root;
+//     family_root: take --> node::person;
+//     person {
+//         if here.sport = "Cricket":
+//             cricket.l::append([here.sport, here.name]);
+//         else if here.sport = "Football":
+//             football.l::append([here.sport, here.name]);
+//         end
+//     } 
+//     with exit {
+//         // birthday_order = std.sort_by_col(birthday_order, 0);
+//         // birthday_order = birthday_order[0:max_return];
+//         std.out(cricket);
+//         std.out(football);
+//         report cricket;
+//         report football;
 //     }
 // }
+
+
